@@ -1,0 +1,38 @@
+{
+  "name": "mini-social-media-app",
+  "version": "1.0.0",
+  "description": "mini social media app using  NodeJS, MongooseJS, Express, MongoDB, Apollo Server, React Hooks, Semantic UI",
+  "keywords": [
+    "NodeJS",
+    "MongooseJS",
+    "Express",
+    "MongoDB",
+    "Apollo Server",
+    "React Hooks",
+    "Semantic UI"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iachieve/mini-social-media-app.git"
+  },
+  "author": "Mohamed Abdelhalim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iachieve/mini-social-media-app/issues"
+  },
+  "homepage": "https://github.com/iachieve/mini-social-media-app#readme",
+  "dependencies": {
+    "apollo-server": "^2.12.0",
+    "graphql": "^15.0.0",
+    "mongoose": "^5.9.10"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.3"
+  }
+}
