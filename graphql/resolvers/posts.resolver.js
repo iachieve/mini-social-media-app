@@ -1,3 +1,5 @@
+const { AuthenticationError } = require('apollo-server');
+
 const Post = require('../../models/Post.model');
 const checkAuth = require('../../util/check-auth');
 
@@ -5,18 +7,18 @@ module.exports = {
   Query: {
     async getPosts() {
       try {
-        const posts = await Post.find();
+        const posts = await Post.find().sort({ createdAt: -1 });
         return posts;
       } catch (e) {
         throw new Error(e);
       }
     },
-    async getPost(_, {postId}){
+    async getPost(_, { postId }) {
       try {
         const post = Post.findById(postId);
-        if(post){
+        if (post) {
           return post;
-        }else{
+        } else {
           throw new Error('Post not found');
         }
       } catch (error) {
@@ -25,7 +27,7 @@ module.exports = {
     }
   },
   Mutation: {
-    async createPost(_, {body}, context){
+    async createPost(_, { body }, context) {
       const user = checkAuth(context);
       const newPost = new Post({
         body,
@@ -36,6 +38,20 @@ module.exports = {
 
       const post = await newPost.save();
       return post;
+    },
+    async deletePost(_, { postId }, context) {
+      const user = checkAuth(context);
+      try {
+        const post = await Post.findById(postId);
+        if (user.username === post.username) {
+          await post.delete();
+          return 'Post delete successfully';
+        } else {
+          throw new AuthenticationError('Action not allowed');
+        }
+      } catch (e) {
+        throw new Error(e);
+      }
     }
   }
 }
