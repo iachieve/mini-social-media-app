@@ -2,15 +2,20 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
-const { ApolloServer } = require('apollo-server');
+
+const { ApolloServer, PubSub } = require('apollo-server');
+
+const pubsub = new PubSub();
+
+
 const mongoose = require('mongoose');
 const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers/index.resolver');
+const resolvers = require('./graphql/resolvers/index');
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({req}) => ({req})
+  context: ({ req }) => ({ req, pubsub })
 });
 
 mongoose.connect(process.env.MONGO_URI,
